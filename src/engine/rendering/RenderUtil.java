@@ -4,6 +4,7 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL30.*;
 
 import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 
 import org.lwjgl.BufferUtils;
 
@@ -34,6 +35,10 @@ public class RenderUtil {
 		return BufferUtils.createFloatBuffer(size);
 	}
 	
+	public static IntBuffer createIntBuffer(int size) {
+		return BufferUtils.createIntBuffer(size);
+	}
+	
 	public static FloatBuffer createFlippedBuffer(Vertex[] vertices) {
 		FloatBuffer buffer = createFloatBuffer(vertices.length * Vertex.SIZE);
 		
@@ -48,8 +53,12 @@ public class RenderUtil {
 		return buffer;
 	}
 	
-	public static String getOpenGLVersion() {
-		return glGetString(GL_VERSION);
+	public static IntBuffer createFlippedBuffer(int... indices) {
+		IntBuffer buffer = createIntBuffer(indices.length);
+		buffer.put(indices);
+		buffer.flip();
+		
+		return buffer;
 	}
 	
 	public static FloatBuffer createFlippedBuffer(Matrix4f m) {
@@ -64,5 +73,9 @@ public class RenderUtil {
 		buffer.flip();
 		
 		return buffer;
+	}
+	
+	public static String getOpenGLVersion() {
+		return glGetString(GL_VERSION);
 	}
 }

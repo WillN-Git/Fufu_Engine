@@ -7,6 +7,8 @@ public class Transform {
 	
 	public Transform() {
 		translation = new Vector3f();
+		rotation = new Vector3f();
+		scale = new Vector3f(1.f, 1.f, 1.f);
 	}
 	
 	public Transform(Vector3f inTranslation, Vector3f inRotation, Vector3f inScale) {

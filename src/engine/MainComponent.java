@@ -9,8 +9,8 @@ import engine.rendering.RenderUtil;
  */
 
 public class MainComponent {
-	public static final int WIDTH = 1000;
-	public static final int HEIGHT = 1000;
+	public static final int WIDTH = 1920;
+	public static final int HEIGHT = 1080;
 	public static final String TITLE = "FUFU";
 	public static final double FRAME_CAP = 5000.0;
 	

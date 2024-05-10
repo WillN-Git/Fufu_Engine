@@ -14,16 +14,24 @@ public class Game {
 	private Shader shader;
 	
 	public Game() {
-		mesh = new Mesh();
+		mesh = ResourceManager.loadMesh("cube.obj");
 		shader = new Shader();
 		
-		Vertex[] data = new Vertex[] {
-			new Vertex(new Vector3f(-1, -1, 0)),
-			new Vertex(new Vector3f(0, 1, 0)),
-			new Vertex(new Vector3f(1, -1, 0)),
-		};
-		
-		mesh.addVertices(data);
+//		Vertex[] vertices = new Vertex[] {
+//			new Vertex(new Vector3f(-1, -1, 0)),
+//			new Vertex(new Vector3f(0, 1, 0)),
+//			new Vertex(new Vector3f(1, -1, 0)),
+//			new Vertex(new Vector3f(0, -1, 1)),
+//		};
+//		
+//		int[] indices = new int[] {
+//				0, 1, 3,
+//				3, 1, 2,
+//				2, 1, 0,
+//				0, 2, 3
+//			};
+//		
+//		mesh.addVertices(vertices, indices);
 		shader.addVertexShader(ResourceManager.loadShader("basicVertex.vert"));
 		shader.addFragmentShader(ResourceManager.loadShader("basicFragment.frag"));
 		shader.compileShader();
@@ -52,9 +60,9 @@ public class Game {
 	Transform transform;
 	public void update() {
 		temp += TimeSystem.getDeltaTime();
-		transform.setTranslation((float)Math.sin(temp), 0, 0);
-		transform.setRotation(0, 0, (float)Math.sin(temp) * 180);
-		transform.setScale((float)Math.sin(temp), (float)Math.sin(temp), (float)Math.sin(temp));
+		//transform.setTranslation((float)Math.sin(temp), 0, 0);
+		transform.setRotation((float)Math.sin(temp) * 180, (float)Math.sin(temp) * 90 , 0);
+		transform.setScale(0.3f, .3f, 0.3f);
 	}
 	
 	public void render() {
