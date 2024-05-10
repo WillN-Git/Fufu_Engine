@@ -16,7 +16,7 @@ public class Game {
 		}
 		
 		if (InputSystem.isMouseBtnDown(1)) {
-			System.out.println("We've just pressed right click + " + InputSystem.getMousePosition());
+			System.out.println("We've just pressed right click + ");
 		}
 		if (InputSystem.isMouseBtnUp(1)) {
 			System.out.println("We've just released right click");

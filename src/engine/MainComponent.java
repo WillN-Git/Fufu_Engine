@@ -69,10 +69,9 @@ public class MainComponent {
 				
 				TimeSystem.setDeltaTime(frameTime);
 				
-				InputSystem.update();
-				
 				game.pollInput();
 				game.update();
+				InputSystem.update();
 				
 				// TODO : update game
 				
