@@ -7,6 +7,8 @@ import java.nio.FloatBuffer;
 
 import org.lwjgl.BufferUtils;
 
+import engine.math.Matrix4f;
+
 
 public class RenderUtil {	
 	public static void clearScreen() {
@@ -48,5 +50,19 @@ public class RenderUtil {
 	
 	public static String getOpenGLVersion() {
 		return glGetString(GL_VERSION);
+	}
+	
+	public static FloatBuffer createFlippedBuffer(Matrix4f m) {
+		FloatBuffer buffer = createFloatBuffer(4 * 4);
+		
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				buffer.put(m.get(i, j));
+			}			
+		}
+		
+		buffer.flip();
+		
+		return buffer;
 	}
 }

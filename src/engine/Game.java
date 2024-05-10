@@ -2,6 +2,7 @@ package engine;
 
 import org.lwjgl.input.Keyboard;
 
+import engine.math.Transform;
 import engine.math.Vector3f;
 import engine.rendering.Mesh;
 import engine.rendering.ResourceManager;
@@ -26,6 +27,9 @@ public class Game {
 		shader.addVertexShader(ResourceManager.loadShader("basicVertex.vert"));
 		shader.addFragmentShader(ResourceManager.loadShader("basicFragment.frag"));
 		shader.compileShader();
+		
+		transform = new Transform();
+		shader.addUniform("uTransform");
 	}
 	
 	public void pollInput() {
@@ -44,12 +48,18 @@ public class Game {
 		}
 	}
 	
+	float temp = 0.0f;
+	Transform transform;
 	public void update() {
-		
+		temp += TimeSystem.getDeltaTime();
+		transform.setTranslation((float)Math.sin(temp), 0, 0);
+		transform.setRotation(0, 0, (float)Math.sin(temp) * 180);
+		transform.setScale((float)Math.sin(temp), (float)Math.sin(temp), (float)Math.sin(temp));
 	}
 	
 	public void render() {
 		shader.bind();
+		shader.setUniform("uTransform", transform.getTransformMatrix());
 		mesh.draw();
 	}
 }

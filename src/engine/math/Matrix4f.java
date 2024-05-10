@@ -18,6 +18,65 @@ public class Matrix4f {
 		return this;
 	}
 	
+	public Matrix4f initTranslation(float tx, float ty, float tz) {
+		m = new float[][]{
+				{1, 0, 0, tx},
+				{0, 1, 0, ty},
+				{0, 0, 1, tz},
+				{0, 0, 0, 1}
+		};
+		
+		return this;
+	}
+	
+	public Matrix4f initRotation(float x, float y, float z) {
+		Matrix4f rx = new Matrix4f();
+		Matrix4f ry = new Matrix4f();
+		Matrix4f rz = new Matrix4f();
+		
+		x = (float)Math.toRadians(x);
+		y = (float)Math.toRadians(y);
+		z = (float)Math.toRadians(z);
+				
+		rx.m = new float[][]{
+			{1, 		0, 					0, 				0},
+			{0, (float)Math.cos(x), (float)-Math.sin(x), 	0},
+			{0, (float)Math.sin(x), (float)Math.sin(x), 	0},
+			{0, 		0,		  			0, 				1}
+		};
+		
+		ry.m = new float[][]{
+			{(float)Math.cos(y), 	0, 	(float)-Math.sin(y), 	0},
+			{0, 					1,		 	0, 				0},
+			{(float)Math.sin(y), 	0, 	(float)Math.cos(y), 	0},
+			{0, 					0,		  	0, 				1}
+		};
+		
+		
+		rz.m = new float[][]{
+			{(float)Math.cos(z), (float)-Math.sin(z), 	0, 			0},
+			{(float)Math.sin(z), (float) Math.cos(z), 	0, 			0},
+			{0, 							0, 		  	1, 			0},
+			{0, 							0,		  	0, 			1}
+		};
+		
+		m = rz.mul(ry.mul(rx)).getM();
+		
+		return this;
+	}
+	
+	public Matrix4f initScale(float sx, float sy, float sz) {
+		m = new float[][]{
+			{sx, 0, 0, 0},
+			{0, sy, 0, 0},
+			{0, 0, sz, 0},
+			{0, 0,  0, 1}
+		};
+		
+		return this;
+	}
+	
+	
 	public Matrix4f mul(Matrix4f mat) {
 		Matrix4f res = new Matrix4f();
 		
