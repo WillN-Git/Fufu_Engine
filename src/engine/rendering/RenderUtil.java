@@ -45,4 +45,8 @@ public class RenderUtil {
 		
 		return buffer;
 	}
+	
+	public static String getOpenGLVersion() {
+		return glGetString(GL_VERSION);
+	}
 }

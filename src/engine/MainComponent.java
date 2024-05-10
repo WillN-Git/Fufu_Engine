@@ -9,8 +9,8 @@ import engine.rendering.RenderUtil;
  */
 
 public class MainComponent {
-	public static final int WIDTH = 800;
-	public static final int HEIGHT = 800;
+	public static final int WIDTH = 1000;
+	public static final int HEIGHT = 1000;
 	public static final String TITLE = "FUFU";
 	public static final double FRAME_CAP = 5000.0;
 	
@@ -19,6 +19,8 @@ public class MainComponent {
 	private Game game;
 	
 	public MainComponent() {
+		// System.out.println("OpenGL version : " + RenderUtil.getOpenGLVersion());
+		
 		RenderUtil.initGraphics();
 		
 		bRunning = false;
