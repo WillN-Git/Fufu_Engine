@@ -3,23 +3,44 @@ package engine;
 import org.lwjgl.input.Keyboard;
 
 import engine.math.Transform;
+import engine.math.Vector2f;
 import engine.math.Vector3f;
 import engine.rendering.Camera;
 import engine.rendering.Mesh;
 import engine.rendering.ResourceManager;
 import engine.rendering.Shader;
+import engine.rendering.Texture;
 import engine.rendering.Vertex;
 
 public class Game {
 	private Mesh mesh;
 	private Shader shader;
 	private Transform transform;
+	private Texture texture;
 	private Camera camera;
 	
 	public Game() {
-		mesh = ResourceManager.loadMesh("cube.obj");
+//		mesh = ResourceManager.loadMesh("cube.obj");
+		mesh = new Mesh();
 		shader = new Shader();
-	
+		texture = ResourceManager.loadTexture("grid.png");
+		
+		Vertex[] vertices = new Vertex[] {
+			new Vertex(new Vector3f(-1, -1, 0), new Vector2f(0, 0)),	
+			new Vertex(new Vector3f(0, 1, 0), new Vector2f(.5f, 0)),	
+			new Vertex(new Vector3f(1, -1, 0), new Vector2f(1.f, 0)),	
+			new Vertex(new Vector3f(0, -1, 1), new Vector2f(0, .5f)),	
+		};
+		
+		int[] indices = new int[] {
+			0, 1, 3,
+			3, 1, 2,
+			2, 1, 0,
+			0, 2, 3
+		};
+		
+		
+		mesh.addVertices(vertices, indices);
 		shader.addVertexShader(ResourceManager.loadShader("basicVertex.vert"));
 		shader.addFragmentShader(ResourceManager.loadShader("basicFragment.frag"));
 		shader.compileShader();
@@ -62,6 +83,7 @@ public class Game {
 	public void render() {
 		shader.bind();
 		shader.setUniform("uTransform", transform.getProjectedTransformationMatrix());
+		texture.bind();
 		mesh.draw();
 	}
 }

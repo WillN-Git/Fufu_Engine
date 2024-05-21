@@ -1,14 +1,37 @@
 package engine.rendering;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.util.ArrayList;
+
+import org.newdawn.slick.opengl.TextureLoader;
 
 import engine.math.Vector3f;
 
 public class ResourceManager {
 	private static String SHADER_ROOTPATH = "./resources/shaders/";
 	private static String MESH_ROOTPATH = "./resources/meshes/";
+	private static String TEX_ROOTPATH = "./resources/textures/";
+	
+	public static Texture loadTexture(String fileName) {
+		String[] splittedFileName = fileName.split("\\.");
+		String ext = splittedFileName[splittedFileName.length - 1];
+		
+		try
+		{
+			int id = TextureLoader.getTexture(ext, new FileInputStream(new File(TEX_ROOTPATH + fileName))).getTextureID();
+			
+			return new Texture(id);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
+		
+		return null;
+	}
 	
 	public static String loadShader(String fileName) {
 		StringBuilder shaderSrc = new StringBuilder();

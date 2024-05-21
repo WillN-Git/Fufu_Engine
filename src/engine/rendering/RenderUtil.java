@@ -18,6 +18,13 @@ public class RenderUtil {
 		
 	}
 	
+	public static void setTextures(boolean enabled) {
+		if (enabled)
+			glEnable(GL_TEXTURE_2D);
+		else
+			glDisable(GL_TEXTURE_2D);
+	}
+	
 	public static void initGraphics() {
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		
@@ -28,6 +35,7 @@ public class RenderUtil {
 		
 		// TODO : Depth clamp for later
 		
+		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_FRAMEBUFFER_SRGB); // gamma correction
 	}
 	
@@ -46,6 +54,9 @@ public class RenderUtil {
 			buffer.put(vertices[i].getPos().getX());
 			buffer.put(vertices[i].getPos().getY());
 			buffer.put(vertices[i].getPos().getZ());
+			
+			buffer.put(vertices[i].getTexCoord().getX());
+			buffer.put(vertices[i].getTexCoord().getY());
 		}
 		
 		buffer.flip();
