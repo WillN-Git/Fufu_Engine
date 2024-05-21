@@ -6,7 +6,7 @@ public class Quaternion {
 	private float y;
 	private float z;
 	
-	public Quaternion( float w, float x, float y, float z) {
+	public Quaternion(float w, float x, float y, float z) {
 		this.w = w;
 		this.x = x;
 		this.y = y;
@@ -34,22 +34,20 @@ public class Quaternion {
 		return new Quaternion(w, -x, -y, -z);
 	}
 	
-	// Operates q1 * q2
 	public Quaternion mul(Quaternion q2) {
 		return new Quaternion(
 					w * q2.getW() - x * q2.getX() - y * q2.getY() - z * q2.getZ(),
-					w * q2.getX() + x * q2.getW() + y * q2.getZ() - z * q2.getY(),
-					w * q2.getY() - x * q2.getZ() - y * q2.getW() - z * q2.getX(),
-					w * q2.getZ() - x * q2.getY() - y * q2.getX() - z * q2.getW()					
+					x * q2.getW() + w * q2.getX() + y * q2.getZ() - z * q2.getY(),
+					y * q2.getW() + w * q2.getY() + z * q2.getX() - x * q2.getZ(),
+					z * q2.getW() + w * q2.getZ() + x * q2.getY() - y * q2.getX()					
 				);
 	}
 	
-	// Operates q * v
 	public Quaternion mul(Vector3f v) {
 		return new Quaternion(
 					-x * v.getX() - y * v.getY() - z * v.getZ(),
 					w * v.getX() + y * v.getZ() - z * v.getY(),
-					w * v.getY() - x * v.getZ() - z * v.getX(),
+					w * v.getY() + z * v.getX() - x * v.getZ(),
 					w * v.getZ() + x * v.getY() - y * v.getX()
 				);
 	}

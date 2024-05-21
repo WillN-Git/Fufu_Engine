@@ -67,9 +67,16 @@ public class ResourceManager {
 							Float.valueOf(tokens[3]))
 						));
 				} else if (tokens[0].equals("f")) {
-					indices.add(Integer.valueOf(tokens[1]) - 1);
-					indices.add(Integer.valueOf(tokens[2]) - 1);
-					indices.add(Integer.valueOf(tokens[3]) - 1);
+					indices.add(Integer.valueOf(tokens[1].split("/")[0]) - 1);
+					indices.add(Integer.valueOf(tokens[2].split("/")[0]) - 1);
+					indices.add(Integer.valueOf(tokens[3].split("/")[0]) - 1);
+					
+					// For quads
+					if (tokens.length > 4) {
+						indices.add(Integer.valueOf(tokens[1].split("/")[0]) - 1);
+						indices.add(Integer.valueOf(tokens[2].split("/")[0]) - 1);
+						indices.add(Integer.valueOf(tokens[3].split("/")[0]) - 1);
+					}
 				}
 			}
 			

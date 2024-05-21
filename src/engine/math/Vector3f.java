@@ -38,11 +38,11 @@ public class Vector3f {
 	}
 	
 	public Vector3f cross(Vector3f v) {
-		return new Vector3f((y * v.getZ() - z * v.getY()), -1 * (x * v.getZ() - z * getX()), (x * v.getY() - y * getX()));
+		return new Vector3f((y * v.getZ() - z * v.getY()), -1 * (x * v.getZ() - z * v.getX()), (x * v.getY() - y * v.getX()));
 	}
 	
 	public Vector3f add(Vector3f v) {
-		return new Vector3f(x + v.getX(), y + v.getY(), z + getZ());
+		return new Vector3f(x + v.getX(), y + v.getY(), z + v.getZ());
 	}
 
 	public Vector3f add(float r) {
@@ -51,6 +51,26 @@ public class Vector3f {
 	
 	public Vector3f scale(float k) {
 		return new Vector3f(x * k, y * k, z * k);
+	}
+	
+	public Vector3f rotate(float angle, Vector3f axis) {
+		float sin = (float)Math.sin(Math.toRadians(angle / 2));
+		float cos = (float)Math.cos(Math.toRadians(angle / 2));
+		
+		float rw = 1.f * cos;
+		float rx = axis.getX() * sin;
+		float ry = axis.getY() * sin;
+		float rz = axis.getZ() * sin;
+		
+		Quaternion q = new Quaternion(rw, rx, ry, rz);
+		Quaternion q_ = q.conjugate();
+		Quaternion res = q.mul(this).mul(q_);
+		
+		x = res.getX();
+		y = res.getY();
+		z = res.getZ();
+		
+		return this;
 	}
 	
 	public float getX() {
