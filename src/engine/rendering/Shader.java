@@ -38,6 +38,10 @@ public class Shader {
 		uniforms.put(uniform, uniformLocation);
 	}
 	
+	public void updateUniforms(Matrix4f worldMatrix, Matrix4f projectedMatrix, Material material) {
+		
+	}
+	
 	public void addVertexShader(String text) {
 		addProgram(text, GL_VERTEX_SHADER);
 	}

@@ -53,6 +53,10 @@ public class Vector3f {
 		return new Vector3f(x * k, y * k, z * k);
 	}
 	
+	public Vector3f abs() {
+		return new Vector3f(Math.abs(x), Math.abs(y), Math.abs(z));
+	}
+	
 	public Vector3f rotate(float angle, Vector3f axis) {
 		float sin = (float)Math.sin(Math.toRadians(angle / 2));
 		float cos = (float)Math.cos(Math.toRadians(angle / 2));

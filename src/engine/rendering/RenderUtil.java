@@ -9,6 +9,7 @@ import java.nio.IntBuffer;
 import org.lwjgl.BufferUtils;
 
 import engine.math.Matrix4f;
+import engine.math.Vector3f;
 
 
 public class RenderUtil {	
@@ -23,6 +24,14 @@ public class RenderUtil {
 			glEnable(GL_TEXTURE_2D);
 		else
 			glDisable(GL_TEXTURE_2D);
+	}
+	
+	public static void unbindTextures() {
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+	
+	public static void setClearColor(Vector3f color) {
+		glClearColor(color.getX(), color.getY(), color.getZ(), 1.f);
 	}
 	
 	public static void initGraphics() {

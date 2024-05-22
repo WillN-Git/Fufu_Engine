@@ -5,8 +5,12 @@ import org.lwjgl.input.Keyboard;
 import engine.math.Transform;
 import engine.math.Vector2f;
 import engine.math.Vector3f;
+import engine.rendering.BasicShader;
 import engine.rendering.Camera;
+import engine.rendering.Material;
 import engine.rendering.Mesh;
+import engine.rendering.PhongShader;
+import engine.rendering.RenderUtil;
 import engine.rendering.ResourceManager;
 import engine.rendering.Shader;
 import engine.rendering.Texture;
@@ -14,22 +18,26 @@ import engine.rendering.Vertex;
 
 public class Game {
 	private Mesh mesh;
-	private Shader shader;
 	private Transform transform;
 	private Texture texture;
+	private Material material;
 	private Camera camera;
+	
+	private Shader shader;
 	
 	public Game() {
 //		mesh = ResourceManager.loadMesh("cube.obj");
 		mesh = new Mesh();
-		shader = new Shader();
+		shader = PhongShader.getInstance();
 		texture = ResourceManager.loadTexture("grid.png");
+		material = new Material(texture, new Vector3f(0.2f, 0.4f, 1));
+		transform = new Transform();
 		
 		Vertex[] vertices = new Vertex[] {
 			new Vertex(new Vector3f(-1, -1, 0), new Vector2f(0, 0)),	
-			new Vertex(new Vector3f(0, 1, 0), new Vector2f(.5f, 0)),	
-			new Vertex(new Vector3f(1, -1, 0), new Vector2f(1.f, 0)),	
-			new Vertex(new Vector3f(0, -1, 1), new Vector2f(0, .5f)),	
+			new Vertex(new Vector3f(0, 1, 0), 	new Vector2f(.5f, 0)),	
+			new Vertex(new Vector3f(1, -1, 0), 	new Vector2f(1.f, 0)),	
+			new Vertex(new Vector3f(0, -1, 1),	new Vector2f(0, .5f))	
 		};
 		
 		int[] indices = new int[] {
@@ -39,36 +47,17 @@ public class Game {
 			0, 2, 3
 		};
 		
-		
 		mesh.addVertices(vertices, indices);
-		shader.addVertexShader(ResourceManager.loadShader("basicVertex.vert"));
-		shader.addFragmentShader(ResourceManager.loadShader("basicFragment.frag"));
-		shader.compileShader();
 		
 		camera = new Camera();
 		
 		Transform.setProjectionMatrix(70f, Window.getWidth(), Window.getHeight(), 0.1f, 1000f);
 		Transform.setCamera(camera);
 		
-		transform = new Transform();
-		shader.addUniform("uTransform");
+		PhongShader.setAmbientLight(new Vector3f(1, 1, 1));
 	}
 	
 	public void pollInput() {
-//		if (InputSystem.isKeyDown(Keyboard.KEY_UP)) {
-//			System.out.println("We've just pressed up");
-//		}
-//		if (InputSystem.isKeyUp(Keyboard.KEY_UP)) {
-//			System.out.println("We've just released up");
-//		}
-//		
-//		if (InputSystem.isMouseBtnDown(1)) {
-//			System.out.println("We've just pressed right click + ");
-//		}
-//		if (InputSystem.isMouseBtnUp(1)) {
-//			System.out.println("We've just released right click");
-//		}
-		
 		camera.pollInput();
 	}
 	
@@ -81,8 +70,8 @@ public class Game {
 	}
 	
 	public void render() {
-		shader.bind();
-		shader.setUniform("uTransform", transform.getProjectedTransformationMatrix());
+		RenderUtil.setClearColor(Transform.getCamera().getPos().scale(1.f / 2048).abs());
+		shader.updateUniforms(transform.getTransformationMatrix(), transform.getProjectedTransformationMatrix(), material);
 		texture.bind();
 		mesh.draw();
 	}

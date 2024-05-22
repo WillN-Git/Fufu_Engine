@@ -139,15 +139,15 @@ public class InputSystem {
 	public static final int KEY_POWER           = 0xDE;
 	public static final int KEY_SLEEP           = 0xDF;
 	
-	private static boolean[] m_lastKeys = new boolean[NUM_KEYCODES];
-	private static boolean[] m_lastMouse = new boolean[NUM_MOUSEBUTTONS];
+	private static boolean[] lastKeys = new boolean[NUM_KEYCODES];
+	private static boolean[] lastMouse = new boolean[NUM_MOUSEBUTTONS];
 	
 	public static void update() {
 		for(int i = 0; i < NUM_KEYCODES; i++)
-			m_lastKeys[i] = isKeyPressed(i);
+			lastKeys[i] = isKeyPressed(i);
 		
 		for(int i = 0; i < NUM_MOUSEBUTTONS; i++)
-			m_lastMouse[i] = isMouseBtnPressed(i);
+			lastMouse[i] = isMouseBtnPressed(i);
 	}
 	
 	public static boolean isKeyPressed(int keyCode)	{
@@ -155,11 +155,11 @@ public class InputSystem {
 	}
 	
 	public static boolean isKeyDown(int keyCode) {
-		return isKeyPressed(keyCode) && !m_lastKeys[keyCode];
+		return isKeyPressed(keyCode) && !lastKeys[keyCode];
 	}
 	
 	public static boolean isKeyUp(int keyCode) {
-		return !isKeyPressed(keyCode) && m_lastKeys[keyCode];
+		return !isKeyPressed(keyCode) && lastKeys[keyCode];
 	}
 	
 	public static boolean isMouseBtnPressed(int mouseButton) {
@@ -167,11 +167,11 @@ public class InputSystem {
 	}
 	
 	public static boolean isMouseBtnDown(int mouseButton) {
-		return isMouseBtnPressed(mouseButton) && !m_lastMouse[mouseButton];
+		return isMouseBtnPressed(mouseButton) && !lastMouse[mouseButton];
 	}
 	
 	public static boolean isMouseBtnUp(int mouseButton) {
-		return !isMouseBtnPressed(mouseButton) && m_lastMouse[mouseButton];
+		return !isMouseBtnPressed(mouseButton) && lastMouse[mouseButton];
 	}
 	
 	public static Vector2f GetMousePosition() {

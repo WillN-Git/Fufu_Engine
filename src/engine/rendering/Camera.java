@@ -2,6 +2,8 @@ package engine.rendering;
 
 import engine.InputSystem;
 import engine.TimeSystem;
+import engine.Window;
+import engine.math.Vector2f;
 import engine.math.Vector3f;
 
 public class Camera {
@@ -13,6 +15,9 @@ public class Camera {
 	private Vector3f pos;
 	private Vector3f forward;
 	private Vector3f up;
+	
+	private boolean bMouseLocked = false;
+	private Vector2f screenCenterPos = new Vector2f(Window.getWidth() / 2.f, Window.getHeight() / 2.f);
 	
 	public Camera() {
 		pos = new Vector3f();
@@ -33,6 +38,18 @@ public class Camera {
 		float moveAmount = (float)(MOVE_AMOUNT * TimeSystem.getDeltaTime());
 		float rotAmount = (float)(ROT_AMOUNT * TimeSystem.getDeltaTime());
 		
+		if (InputSystem.isKeyPressed(InputSystem.KEY_SPACE))
+		{
+			InputSystem.setCursor(true);
+			bMouseLocked = false;
+		}
+		if (InputSystem.isMouseBtnDown(0))
+		{
+			InputSystem.setMousePosition(screenCenterPos);
+			InputSystem.setCursor(false);
+			bMouseLocked = true;
+		}
+		
 		if (InputSystem.isKeyPressed(InputSystem.KEY_UP))
 			move(forward, moveAmount);
 		if (InputSystem.isKeyPressed(InputSystem.KEY_DOWN))
@@ -42,14 +59,27 @@ public class Camera {
 		if (InputSystem.isKeyPressed(InputSystem.KEY_RIGHT))
 			move(getLeft(), -moveAmount);
 		
-		if (InputSystem.isKeyPressed(InputSystem.KEY_D))
-			rotateX(rotAmount);
-		if (InputSystem.isKeyPressed(InputSystem.KEY_Q))
-			rotateX(-rotAmount);
-		if (InputSystem.isKeyPressed(InputSystem.KEY_Z))
-			rotateY(rotAmount);
-		if (InputSystem.isKeyPressed(InputSystem.KEY_S))
-			rotateY(-rotAmount);
+		
+		if (bMouseLocked)
+			return;
+		
+		Vector2f dp = InputSystem.GetMousePosition().sub(screenCenterPos);
+		
+		boolean rotX = dp.getX() != 0;
+		boolean rotY = dp.getY() != 0;
+		
+		if (rotY) rotateY(-dp.getY() * rotAmount);
+		if (rotX) rotateX(dp.getX() * rotAmount);
+		if (rotX || rotY) InputSystem.setMousePosition(screenCenterPos);
+		
+//		if (InputSystem.isKeyPressed(InputSystem.KEY_D))
+//			rotateX(rotAmount);
+//		if (InputSystem.isKeyPressed(InputSystem.KEY_Q))
+//			rotateX(-rotAmount);
+//		if (InputSystem.isKeyPressed(InputSystem.KEY_Z))
+//			rotateY(rotAmount);
+//		if (InputSystem.isKeyPressed(InputSystem.KEY_S))
+//			rotateY(-rotAmount);
 	}
 	
 	public void move(Vector3f direction, float amount) {

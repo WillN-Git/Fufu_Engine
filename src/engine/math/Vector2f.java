@@ -57,6 +57,14 @@ public class Vector2f {
 		return new Vector2f(x + r, y + r);
 	}
 	
+	public Vector2f sub(Vector2f v) {		
+		return new Vector2f(x - v.getX(), y - v.getY());
+	}
+	
+	public Vector2f sub(float r) {
+		return new Vector2f(x - r, y - r);		
+	}
+	
 	public Vector2f scale(float k) {
 		return new Vector2f(x * k, y * k);
 	}
