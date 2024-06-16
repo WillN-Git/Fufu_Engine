@@ -5,8 +5,10 @@ import org.lwjgl.input.Keyboard;
 import engine.math.Transform;
 import engine.math.Vector2f;
 import engine.math.Vector3f;
+import engine.rendering.BaseLight;
 import engine.rendering.BasicShader;
 import engine.rendering.Camera;
+import engine.rendering.DirectionalLight;
 import engine.rendering.Material;
 import engine.rendering.Mesh;
 import engine.rendering.PhongShader;
@@ -47,7 +49,7 @@ public class Game {
 			0, 2, 3
 		};
 		
-		mesh.addVertices(vertices, indices);
+		mesh.addVertices(vertices, indices, true);
 		
 		camera = new Camera();
 		
@@ -55,6 +57,7 @@ public class Game {
 		Transform.setCamera(camera);
 		
 		PhongShader.setAmbientLight(new Vector3f(1, 1, 1));
+		PhongShader.setDirectionalLight(new DirectionalLight(new BaseLight(new Vector3f(0, 0, 1), 0.8f), new Vector3f(1, 1, 1)));
 	}
 	
 	public void pollInput() {

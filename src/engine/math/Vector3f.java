@@ -49,6 +49,14 @@ public class Vector3f {
 		return new Vector3f(x + r, y + r, z + r);
 	}
 	
+	public Vector3f sub(Vector3f v) {
+		return new Vector3f(x - v.getX(), y - v.getY(), z - v.getZ());
+	}
+	
+	public Vector3f sub(float r) {
+		return new Vector3f(x - r, y - r, z - r);
+	}
+	
 	public Vector3f scale(float k) {
 		return new Vector3f(x * k, y * k, z * k);
 	}
